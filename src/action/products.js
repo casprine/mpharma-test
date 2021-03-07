@@ -1,0 +1,4 @@
+export const ADD_ITEM = 'PRODUCTS/ADD_ITEM';
+export const INIT_LOAD = 'PRODUCTS/INIT_LOAD';
+export const DELETE_ITEM = 'PRODUCTS/DELETE_ITEM';
+export const EDIT_ITEM = 'PRODUCTS/EDIT_ITEM';
