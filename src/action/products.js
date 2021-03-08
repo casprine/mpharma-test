@@ -18,10 +18,17 @@ export const seed = (data) => {
 
 export const addItem = (data) => {
   return (dispatch) => {
-    console.log(data);
-
     dispatch({
       type: ADD_ITEM,
+      data,
+    });
+  };
+};
+
+export const editItem = (data) => {
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_ITEM,
       data,
     });
   };

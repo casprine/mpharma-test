@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { seed, addItem } from './action/products';
+import { seed, addItem, editItem } from './action/products';
 import axios from 'axios';
 import { FormControl, InputLabel, Input, Card, Box, Button } from '@material-ui/core';
 import { formatMoney } from './utils/format';
@@ -39,7 +39,7 @@ const Form = ({ type, form, onChange, action }) => {
   );
 };
 
-const Product = ({ prices, name, id, onEdit }) => {
+const Product = ({ prices, name, onEdit }) => {
   return (
     <Card className="product">
       <Box display="flex" flexDirection="column">
@@ -47,7 +47,7 @@ const Product = ({ prices, name, id, onEdit }) => {
           <p>{name}</p>
 
           <Box>
-            <Button>Edit</Button>
+            <Button onClick={onEdit}>Edit</Button>
             <Button variant="contained" color="secondary">
               Delete
             </Button>
@@ -67,9 +67,10 @@ const Product = ({ prices, name, id, onEdit }) => {
   );
 };
 
-function App({ addItem, seedStore, products, prices }) {
+function App({ addItem, seedStore, products, prices, editItem }) {
   const [form, setForm] = useState({ name: '', price: '' });
   const [formType, setFormType] = useState('create');
+  const [selectedProduct, setSelectedProduct] = useState();
 
   useEffect(() => {
     async function fetchData() {
@@ -99,6 +100,13 @@ function App({ addItem, seedStore, products, prices }) {
         ...form,
       });
     }
+
+    if (formType === 'edit') {
+      editItem({
+        ...selectedProduct,
+        ...form,
+      });
+    }
   }
 
   return (
@@ -110,7 +118,21 @@ function App({ addItem, seedStore, products, prices }) {
 
       <div className="products">
         {products.map((product) => (
-          <Product {...product} key={product.id} />
+          <Product
+            {...product}
+            onEdit={() => {
+              setSelectedProduct({
+                productId: product.id,
+                priceId: product.prices[0].id,
+              });
+              setFormType('edit');
+              setForm({
+                name: product.name,
+                price: product.prices[0].price,
+              });
+            }}
+            key={product.id}
+          />
         ))}
       </div>
     </div>
@@ -120,6 +142,7 @@ function App({ addItem, seedStore, products, prices }) {
 const mapDispatchToProps = {
   seedStore: seed,
   addItem,
+  editItem,
 };
 
 const mapStateToProps = (state) => {

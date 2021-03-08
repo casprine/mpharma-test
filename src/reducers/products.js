@@ -21,6 +21,28 @@ const ACTIONS = {
     ];
     return { ...state, products: updatedProducts, prices: updatedPrices };
   },
+
+  [EDIT_ITEM]: (state, action) => {
+    const { name, price, productId, priceId } = action.data;
+
+    const updatedProducts = state.products.map((product) => {
+      if (product.id === productId) {
+        const updatedProduct = { ...product, name };
+        return updatedProduct;
+      }
+      return product;
+    });
+
+    const updatedPrices = state.prices.map((p) => {
+      if (p.id === priceId) {
+        const updatedPrice = { ...p, price };
+        return updatedPrice;
+      }
+      return p;
+    });
+
+    return { ...state, products: updatedProducts, prices: updatedPrices };
+  },
 };
 
 export default function authReducer(state = initialState, action) {
