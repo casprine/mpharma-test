@@ -1,8 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
 import rootReducer from './reducers';
 
@@ -13,7 +14,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let store = createStore(persistedReducer, composeWithDevTools());
+let store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)));
 let persistor = persistStore(store);
 
 export { store, persistor };
