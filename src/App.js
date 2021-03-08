@@ -154,7 +154,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
   const {
-    products: { products, prices },
+    products: { products = [], prices = [] },
   } = state;
 
   return {
