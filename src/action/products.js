@@ -33,3 +33,12 @@ export const editItem = (data) => {
     });
   };
 };
+
+export const deleteItem = (data) => {
+  return (dispatch) => {
+    dispatch({
+      type: DELETE_ITEM,
+      data,
+    });
+  };
+};

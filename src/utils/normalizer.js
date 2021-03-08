@@ -26,6 +26,8 @@ export const productsNormalizer = (records) => {
   });
 
   prices.sort(sortProductPrices);
+
+  console.log({ products });
   const finalState = {
     products,
     prices,

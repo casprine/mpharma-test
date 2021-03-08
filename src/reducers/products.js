@@ -43,6 +43,17 @@ const ACTIONS = {
 
     return { ...state, products: updatedProducts, prices: updatedPrices };
   },
+
+  [DELETE_ITEM]: (state, action) => {
+    const { productId } = action.data;
+
+    const updatedProducts = state.products.filter((product) => product.id !== productId);
+
+    return {
+      ...state,
+      products: updatedProducts,
+    };
+  },
 };
 
 export default function authReducer(state = initialState, action) {
